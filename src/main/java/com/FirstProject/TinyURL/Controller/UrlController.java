@@ -54,6 +54,12 @@ public class UrlController {
 //
 //        headers.setLocation(URI.create(originalURL));
 
+        if (!originalURL.startsWith("http://")
+                && !originalURL.startsWith("https://")) {
+
+            originalURL = "https://" + originalURL;
+        }
+
         return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(originalURL)).build();
     }
 
