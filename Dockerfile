@@ -6,7 +6,7 @@
 # We start with an official Maven image that includes OpenJDK 17.
 # Using a specific version tag (e.g., 3.8.5-openjdk-17) is a best practice for reproducible builds.
 # We give this stage a name, "builder", so we can refer to it later.
-FROM maven:4.0.0-eclipse-temurin-21 AS builder
+FROM maven:3.9.9-eclipse-temurin-21 AS builder
 
 # Set the working directory inside the container. All subsequent commands
 # will be run from this directory.
