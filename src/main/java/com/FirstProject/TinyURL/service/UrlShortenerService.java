@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -56,6 +56,9 @@ public class UrlShortenerService {
             UrlMapping urlMapping = new  UrlMapping();
             urlMapping.setOriginalUrl(originalUrl);
             urlMapping.setCreatedDate(LocalDateTime.now());
+
+            // This guarantees uniqueness.
+            urlMapping.setShortCode(UUID.randomUUID().toString());
 
             if(hoursToExpire != null && hoursToExpire > 0){
                 urlMapping.setExpirationDate(LocalDateTime.now().plusHours(hoursToExpire));
