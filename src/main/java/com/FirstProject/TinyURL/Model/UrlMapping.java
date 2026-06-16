@@ -18,8 +18,8 @@ public class UrlMapping {
     @Column(nullable = false)
     private Long id;
 
-    @Lob
-    @Column(nullable = false)
+//    @Lob
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String originalUrl;
 
     @Column(unique = true, nullable = false)
