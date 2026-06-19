@@ -4,6 +4,7 @@ import com.FirstProject.TinyURL.dto.UrlStatsResponse;
 import com.FirstProject.TinyURL.exception.AliasAlreadyExistsException;
 import com.FirstProject.TinyURL.service.UrlShortenerService;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,14 +31,15 @@ public class PageController {
             @RequestParam("longUrl") String longUrl,
             @RequestParam(name = "customAlias", required = false) String customAlias,
             @RequestParam(name = "hoursToExpire", required = false) Integer hoursToExpire,
-            Model model)
+            Authentication authentication, Model model)
     {
+        String email = authentication.getDeclaringClass().getName();
 
         model.addAttribute("originalUrl", longUrl);
 
     try{
 
-        String shortCode = urlShortenerService.shortenUrl(longUrl, customAlias,  hoursToExpire);
+        String shortCode = urlShortenerService.shortenUrl(longUrl, customAlias,  hoursToExpire, email);
 
 //        String fullShortUrl = "http://localhost:8080/" + shortCode;
         String fullShortUrl = baseUrl + "/r/" + shortCode;
