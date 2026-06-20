@@ -143,6 +143,7 @@ public class UrlShortenerService {
                 .stream()
                 .map(url -> new UrlHistoryResponse(
                         url.getOriginalUrl(),
+                        url.getShortCode(),
                         baseUrl+ "/r/" + url.getShortCode(),
                         url.getClickCount(),
                         url.getCreatedDate(),
