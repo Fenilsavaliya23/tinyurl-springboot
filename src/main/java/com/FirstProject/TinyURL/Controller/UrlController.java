@@ -85,6 +85,7 @@ public class UrlController {
 
     @GetMapping("/api/v1/url/dashboard")
     public ResponseEntity<DashboardStatsResponse> getDashboardStats(Authentication authentication) throws Exception {
+        System.out.println("AUTH = " + authentication);
         return ResponseEntity.ok(urlShortenerService.getDashboardStats(authentication.getName()));
     }
 

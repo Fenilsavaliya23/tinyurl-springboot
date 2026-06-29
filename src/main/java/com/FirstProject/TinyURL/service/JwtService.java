@@ -26,9 +26,10 @@ public class JwtService {
         );
     }
 
-    public String generateToken(String email) {
+    public String generateToken(String email, String role) {
         return Jwts.builder()
                 .subject(email)
+                .claim("role", role)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSigningKey())
@@ -43,6 +44,17 @@ public class JwtService {
                 .getPayload();
 
         return claims.getSubject();
+    }
+
+    public String extractRole(String token) {
+
+        Claims claims = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return claims.get("role", String.class);
     }
 
     public boolean isTokenValid(String token){

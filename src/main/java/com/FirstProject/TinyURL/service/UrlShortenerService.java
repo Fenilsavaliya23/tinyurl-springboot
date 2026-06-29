@@ -3,6 +3,7 @@ package com.FirstProject.TinyURL.service;
 import com.FirstProject.TinyURL.Model.UrlMapping;
 import com.FirstProject.TinyURL.Model.User;
 import com.FirstProject.TinyURL.dto.DashboardStatsResponse;
+import com.FirstProject.TinyURL.dto.TopUrlResponse;
 import com.FirstProject.TinyURL.dto.UrlHistoryResponse;
 import com.FirstProject.TinyURL.dto.UrlStatsResponse;
 import com.FirstProject.TinyURL.exception.AliasAlreadyExistsException;
@@ -203,6 +204,15 @@ public class UrlShortenerService {
 
         long mostClickedCount = mostClicked == null ? 0 : mostClicked.getClickCount();
 
+        List<TopUrlResponse> topUrls = urls.stream()
+                .sorted(java.util.Comparator.comparingLong(UrlMapping::getClickCount).reversed())
+                .limit(5)
+                .map(url -> new TopUrlResponse(
+                        baseUrl + "/r/" + url.getShortCode(),
+                        url.getClickCount()
+                ))
+                .toList();
+
         return new DashboardStatsResponse(
                 urls.size(),
 
@@ -220,7 +230,9 @@ public class UrlShortenerService {
 
                 mostClickedUrl,
 
-                mostClickedCount
+                mostClickedCount,
+
+                topUrls
         );
 
     }

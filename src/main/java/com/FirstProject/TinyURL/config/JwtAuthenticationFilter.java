@@ -23,7 +23,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+//        System.out.println("REQUEST URI = " + request.getRequestURI());
+
         String authHeader = request.getHeader("Authorization");
+
+//        System.out.println("AUTH HEADER = " + authHeader);
 
         if (authHeader!=null && authHeader.startsWith("Bearer ")) {
 
@@ -33,10 +37,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     String email = jwtService.extractEmail(token);
 
+                    String role = jwtService.extractRole(token);
+
                     UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(email, null, AuthorityUtils.NO_AUTHORITIES);
+                            new UsernamePasswordAuthenticationToken(
+                                    email,
+                                    null,
+                                    AuthorityUtils.createAuthorityList("ROLE_"+role)
+                            );
+
+//                    System.out.println("JWT FOUND");
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//                    System.out.println("EMAIL = " + email);
+//                    System.out.println("ROLE = " + role);
+//                    System.out.println("AUTHENTICATION SET");
 
                 }
         }

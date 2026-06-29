@@ -1,5 +1,7 @@
 package com.FirstProject.TinyURL.dto;
 
+import java.util.List;
+
 public record DashboardStatsResponse(
         long totalUrls,
 
@@ -11,6 +13,8 @@ public record DashboardStatsResponse(
 
         String mostClickedUrl,
 
-        long mostClickedCount
+        long mostClickedCount,
+
+        List<TopUrlResponse> topUrls
 ) {
 }

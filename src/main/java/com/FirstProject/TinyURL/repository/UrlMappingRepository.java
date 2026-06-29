@@ -14,6 +14,8 @@ public interface UrlMappingRepository extends JpaRepository<UrlMapping, Long> {
 
     long deleteByExpirationDateBefore(LocalDateTime now);
 
+    List<UrlMapping> findByOwner(User owner);
+
     List<UrlMapping> findByOwnerOrderByCreatedDateDesc(User owner);
 
     boolean existsByShortCode(String shortCode);
@@ -23,4 +25,8 @@ public interface UrlMappingRepository extends JpaRepository<UrlMapping, Long> {
     long countByOwnerAndExpirationDateAfter(User owner, LocalDateTime now);
 
     long countByOwnerAndExpirationDateBefore(User owner,LocalDateTime now);
+
+    List<UrlMapping> findAllByOrderByCreatedDateDesc();
+
+    List<UrlMapping> findTop10ByOrderByClickCountDesc();
 }

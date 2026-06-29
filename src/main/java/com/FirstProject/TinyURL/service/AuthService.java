@@ -1,5 +1,6 @@
 package com.FirstProject.TinyURL.service;
 
+import com.FirstProject.TinyURL.Model.Role;
 import com.FirstProject.TinyURL.Model.User;
 import com.FirstProject.TinyURL.dto.LoginRequest;
 import com.FirstProject.TinyURL.dto.LoginResponse;
@@ -29,6 +30,7 @@ public class AuthService {
                 .username(request.username())
                 .password(passwordEncoder.encode(request.password()))
                 .email(request.email())
+                .role(Role.USER)
                 .build();
 
         userRepository.save(user);
@@ -47,7 +49,10 @@ public class AuthService {
 
         return new LoginResponse(
                 "Login Successfully",
-                jwtService.generateToken(user.getEmail())
+                jwtService.generateToken(user.getEmail(),user.getRole().name()),
+                user.getUsername(),
+                user.getEmail(),
+                user.getRole().name()
         );
     }
 }
