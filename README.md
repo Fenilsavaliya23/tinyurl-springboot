@@ -175,6 +175,7 @@ Designed as a production-ready portfolio project, the application is deployed on
 ## 📂 Project Structure
 
 ```
+```
 
 src
 ├── main
@@ -214,7 +215,7 @@ src
 - Request Validation
 - Secure Password Storage
 
----
+
 
 ## ✨ Core Functionalities
 
